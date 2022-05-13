@@ -1,5 +1,7 @@
 package com.bridgelabz.tdd;
 
+import java.util.ArrayList;
+
 /**
  * Calculating Fare By given Distance and Time
  *
@@ -18,8 +20,9 @@ public class CabInvoiceGenerator {
     private static final int COST_PER_TIME = 1;
     private static final double MINIMUM_FARE = 5;
 
+
     //Manually generated This Method From TestCase
-    public double calculateFare(double kilometers, int time) {
+    public double calculateFare(double kilometers, int time, String type) {
 
         double fare = kilometers*MINIMUM_COST_PER_KILOMETER + time*COST_PER_TIME;
 
@@ -35,8 +38,19 @@ public class CabInvoiceGenerator {
 
         double totalFare = 0;
         for(Ride ride : rides) {
-            totalFare = totalFare + this.calculateFare(ride.distance, ride.time);
+            totalFare = totalFare + this.calculateFare(ride.distance, ride.time, type);
         }
         return totalFare;
+    }
+
+
+    @Override
+    public InvoiceSummary calculateFareReturnObject(ArrayList<Ride> rides, String type) {
+
+        double totalFare = 0;
+        for(Ride ride : rides) {
+            totalFare = totalFare + this.calculateFare(ride.distance, ride.time, type);
+        }
+        return new InvoiceSummary(rides.size(), totalFare);
     }
 }
